@@ -1,59 +1,195 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🎫 Secure Ticketing System
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="docs/screenshots/banner.png" alt="Secure Ticketing Banner" width="800">
 </p>
 
-## About Laravel
+<p align="center">
+  <img src="https://img.shields.io/badge/Laravel-12-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel 12">
+  <img src="https://img.shields.io/badge/PHP-8.5-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP 8.5">
+  <img src="https://img.shields.io/badge/PostgreSQL-16-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL">
+  <img src="https://img.shields.io/badge/TailwindCSS-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="TailwindCSS 4">
+</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📖 Tentang Proyek
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**Secure Ticketing** adalah aplikasi sistem tiket dukungan (support ticket) yang dibangun dengan Laravel 12. Proyek ini dirancang sebagai **materi praktikum keamanan web** di SMK Wikrama, mendemonstrasikan:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- ✅ Implementasi sistem tiket lengkap (CRUD)
+- ✅ Praktik keamanan web terbaik
+- ✅ Lab interaktif untuk mempelajari kerentanan XSS
+- ✅ Demo komponen Blade Laravel
 
-## Learning Laravel
+## 🖼️ Screenshots
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+<p align="center">
+  <img src="docs/screenshots/tickets.png" alt="Halaman Utama" width="400">
+  <img src="docs/screenshots/blade.png" alt="Daftar Tiket" width="400">
+</p>
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+<p align="center">
+  <img src="docs/screenshots/xss-lab.png" alt="XSS Lab" width="400">
+  <img src="docs/screenshots/security-testing.png" alt="Security Testing" width="400">
+</p>
 
-## Laravel Sponsors
+## ✨ Fitur Utama
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 🎫 Sistem Tiket
+- Membuat, melihat, mengedit, dan menghapus tiket
+- Sistem prioritas (Low, Medium, High)
+- Status tiket (Open, In Progress, Closed)
+- Komentar pada tiket
 
-### Premium Partners
+### 🔒 Security Testing Lab
+- **XSS Lab** - Pelajari kerentanan Cross-Site Scripting:
+  - Reflected XSS (Vulnerable vs Secure)
+  - Stored XSS (Vulnerable vs Secure)
+  - DOM-based XSS (Vulnerable vs Secure)
+- **CSRF Testing** - Demonstrasi proteksi CSRF
+- **Security Headers** - Analisis header keamanan
+- **Security Audit** - Pemeriksaan keamanan aplikasi
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 🎨 Demo Blade
+- Components
+- Directives
+- Includes
+- Stacks
 
-## Contributing
+## 🛠️ Tech Stack
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+| Teknologi | Versi |
+|-----------|-------|
+| PHP | 8.5.2 |
+| Laravel Framework | 12.50.0 |
+| PostgreSQL | 16+ |
+| TailwindCSS | 4.1.18 |
+| PHPUnit | 11.5.52 |
 
-## Code of Conduct
+## 📋 Persyaratan
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- PHP >= 8.4
+- Composer
+- PostgreSQL >= 14 (atau MySQL >= 8.0)
+- Node.js >= 18
+- NPM >= 9
 
-## Security Vulnerabilities
+## 🚀 Instalasi
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. **Clone repository**
+   ```bash
+   git clone https://github.com/username/secure-ticketing.git
+   cd secure-ticketing
+   ```
 
-## License
+2. **Install dependencies**
+   ```bash
+   composer install
+   npm install
+   ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+3. **Setup environment**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+
+4. **Konfigurasi database** di file `.env`
+   ```env
+   DB_CONNECTION=pgsql
+   DB_HOST=127.0.0.1
+   DB_PORT=5432
+   DB_DATABASE=secure_ticketing
+   DB_USERNAME=postgres
+   DB_PASSWORD=your_password
+   ```
+
+5. **Jalankan migration**
+   ```bash
+   php artisan migrate
+   ```
+
+6. **Build assets**
+   ```bash
+   npm run build
+   ```
+
+7. **Jalankan server**
+   ```bash
+   php artisan serve
+   ```
+
+8. Buka browser dan akses `http://localhost:8000`
+
+## 📁 Struktur Proyek
+
+```
+secure-ticketing/
+├── app/
+│   ├── Http/Controllers/
+│   │   ├── TicketController.php
+│   │   ├── CommentController.php
+│   │   ├── SecurityTestController.php
+│   │   ├── XSSLabController.php
+│   │   └── DemoBladeController.php
+│   └── Models/
+│       ├── User.php
+│       ├── Ticket.php
+│       └── Comment.php
+├── database/
+│   ├── migrations/
+│   └── seeders/
+├── resources/views/
+├── routes/
+│   └── web.php
+├── tests/
+└── docs/
+    └── screenshots/     ← Simpan screenshot di sini
+```
+
+## 🧪 Testing
+
+Jalankan test suite:
+```bash
+php artisan test
+```
+
+Jalankan test dengan coverage:
+```bash
+php artisan test --coverage
+```
+
+## 📚 Dokumentasi Praktikum
+
+### XSS Lab
+
+Lab XSS menyediakan lingkungan aman untuk mempelajari kerentanan Cross-Site Scripting:
+
+| Tipe XSS | Deskripsi |
+|----------|-----------|
+| **Reflected** | Input langsung ditampilkan tanpa sanitasi |
+| **Stored** | Input disimpan di database dan ditampilkan ke user lain |
+| **DOM-based** | Manipulasi DOM melalui JavaScript |
+
+> ⚠️ **Peringatan:** Lab ini hanya untuk tujuan edukasi. Jangan gunakan teknik ini pada sistem tanpa izin.
+
+## 🤝 Kontribusi
+
+1. Fork repository
+2. Buat branch fitur (`git checkout -b fitur/FiturBaru`)
+3. Commit perubahan (`git commit -m 'Menambah FiturBaru'`)
+4. Push ke branch (`git push origin fitur/FiturBaru`)
+5. Buat Pull Request
+
+## 📄 Lisensi
+
+Proyek ini dilisensikan di bawah [MIT License](LICENSE).
+
+## 👨‍🏫 Kredit
+
+Dibuat untuk praktikum keamanan web di **SMK Wikrama**.
+
+---
+
+<p align="center">
+  Made with ❤️ using Laravel
+</p>
