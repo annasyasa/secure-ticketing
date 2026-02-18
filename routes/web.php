@@ -6,6 +6,7 @@ use App\Http\Controllers\DemoBladeController;
 use App\Http\Controllers\XSSLabController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\SecurityTestController;
+use App\Http\Controllers\ValidationLabController;
 
 
 /*
@@ -159,4 +160,48 @@ Route::prefix('security-testing')->name('security-testing.')->group(function () 
 
     // Audit Checklist
     Route::get('/audit', [SecurityTestController::class, 'auditChecklist'])->name('audit');
+});
+
+// ================================================================
+// VALIDATION LAB ROUTES
+// ================================================================
+Route::prefix('validation-lab')->name('validation-lab.')->group(function () {
+    // Index - Menu Lab
+    Route::get('/', [ValidationLabController::class, 'index'])
+        ->name('index');
+
+    // ----- VULNERABLE FORM -----
+    // Form tanpa server-side validation
+    Route::get('/vulnerable', [ValidationLabController::class, 'vulnerableForm'])
+        ->name('vulnerable');
+    Route::post('/vulnerable', [ValidationLabController::class, 'vulnerableSubmit'])
+        ->name('vulnerable.submit');
+    Route::post('/vulnerable/clear', [ValidationLabController::class, 'vulnerableClear'])
+        ->name('vulnerable.clear');
+
+    // ----- SECURE FORM -----
+    // Form dengan server-side validation
+    Route::get('/secure', [ValidationLabController::class, 'secureForm'])
+        ->name('secure');
+    Route::post('/secure', [ValidationLabController::class, 'secureSubmit'])
+        ->name('secure.submit');
+    Route::post('/secure/clear', [ValidationLabController::class, 'secureClear'])
+        ->name('secure.clear');
+});
+
+// ================================================================
+// TICKET CRUD ROUTES
+// ================================================================
+// Menggunakan Resource Controller dengan Form Request validation
+// Store: StoreTicketRequest
+// Update: UpdateTicketRequest
+// Route::resource('tickets', TicketController::class);
+
+// ================================================================
+// API DEMO (untuk demo bypass dengan curl/Postman)
+// ================================================================
+Route::prefix('api')->group(function () {
+    // Vulnerable endpoint - tanpa CSRF dan validation
+    Route::post('/vulnerable-submit', [ValidationLabController::class, 'apiVulnerable'])
+        ->withoutMiddleware(['web']);
 });
