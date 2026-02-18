@@ -1,7 +1,7 @@
 {{-- ============================================ --}}
 {{-- SECURITY CONTEXT POPUP --}}
 {{-- Modal yang menjelaskan konsep keamanan --}}
-{{-- 
+{{--
 {{-- Materi Hari 5 - Lab Lengkap XSS Prevention --}}
 {{-- ============================================ --}}
 
@@ -43,7 +43,7 @@
                                 </tr>
                                 <tr>
                                     <td>Output Encoding</td>
-                                    <td><code>@{{ }}</code></td>
+                                    <td><code>&#123;&#123; &#125;&#125;</code></td>
                                     <td>Auto-escape semua output (htmlspecialchars)</td>
                                 </tr>
                                 <tr>
@@ -62,7 +62,7 @@
                         <i class="bi bi-layers"></i> Defense in Depth
                     </h6>
                     <p class="small text-muted">
-                        Kami menggunakan multiple layers of protection. Jika satu layer gagal, 
+                        Kami menggunakan multiple layers of protection. Jika satu layer gagal,
                         layer lainnya masih melindungi aplikasi.
                     </p>
                     <div class="row g-2">
@@ -112,14 +112,14 @@
                     </p>
                     <div class="bg-dark text-white p-2 rounded mb-2">
                         <code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code>
-                        <button class="btn btn-sm btn-outline-light float-end" 
+                        <button class="btn btn-sm btn-outline-light float-end"
                                 onclick="navigator.clipboard.writeText('<script>alert(\'XSS\')</script>')">
                             <i class="bi bi-clipboard"></i>
                         </button>
                     </div>
                     <div class="bg-dark text-white p-2 rounded mb-2">
                         <code>&lt;img src=x onerror=alert('XSS')&gt;</code>
-                        <button class="btn btn-sm btn-outline-light float-end" 
+                        <button class="btn btn-sm btn-outline-light float-end"
                                 onclick="navigator.clipboard.writeText('<img src=x onerror=alert(\'XSS\')>')">
                             <i class="bi bi-clipboard"></i>
                         </button>
@@ -135,17 +135,17 @@
                     <h6 class="text-info">
                         <i class="bi bi-code-slash"></i> Contoh Kode
                     </h6>
-                    
+
                     <p class="small text-muted">Controller (Sanitization):</p>
                     <pre class="bg-light p-2 rounded small"><code>// Hapus HTML tags
 $cleanContent = strip_tags($validated['content']);</code></pre>
-                    
+
                     <p class="small text-muted mt-3">View (Output Encoding):</p>
                     <pre class="bg-light p-2 rounded small"><code>{{-- Safe: Auto-escaped --}}
-@{{ $comment->content }}
+&#123;&#123; $comment->content &#125;&#125;
 
 {{-- Safe: nl2br + e() --}}
-@{!! nl2br(e($comment->content)) !!}</code></pre>
+&#123;!! nl2br(e($comment->content)) !!&#125;</code></pre>
                 </div>
 
                 {{-- Security Headers --}}
@@ -195,9 +195,9 @@ $cleanContent = strip_tags($validated['content']);</code></pre>
         box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
 </style>
-<button type="button" 
-        class="btn btn-info btn-lg rounded-circle security-floating-btn" 
-        data-bs-toggle="modal" 
+<button type="button"
+        class="btn btn-info btn-lg rounded-circle security-floating-btn"
+        data-bs-toggle="modal"
         data-bs-target="#securityModal"
         title="Lihat Security Context">
     <i class="bi bi-shield-lock"></i>

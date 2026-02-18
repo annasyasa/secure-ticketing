@@ -31,14 +31,14 @@
                 </div>
                 <div class="card-body">
                     <p class="text-muted">Menyertakan partial view ke dalam view lain.</p>
-                    
+
                     <h6>Include dengan data:</h6>
                     <div class="bg-light p-3 rounded mb-3">
                         @php $demoMessage = 'Ini pesan dari parent view!'; @endphp
-                        
+
                         {{-- Include partial dengan data --}}
                         @include('partials.flash-messages')
-                        
+
                         <p class="mb-0 text-success">
                             <i class="bi bi-check"></i> Flash messages partial berhasil di-include
                         </p>
@@ -47,9 +47,9 @@
                     <h6>@@includeWhen (conditional include):</h6>
                     <div class="bg-light p-3 rounded">
                         @php $isAdmin = true; @endphp
-                        
+
                         @includeWhen($isAdmin, 'partials.navigation')
-                        
+
                         <small class="text-muted">
                             Navigation partial di-include karena $isAdmin = true
                         </small>
@@ -76,7 +76,7 @@
                     <p class="text-muted">
                         Syntax: <code>@@each('view', $array, 'variableName', 'emptyView')</code>
                     </p>
-                    
+
                     <h6>Dengan data:</h6>
                     <table class="table table-sm table-bordered">
                         <thead>
@@ -92,7 +92,7 @@
                             @each('partials.ticket-row', $tickets, 'ticket', 'partials.no-tickets')
                         </tbody>
                     </table>
-                    
+
                     <h6 class="mt-4">Dengan data kosong:</h6>
                     <table class="table table-sm table-bordered">
                         <thead>
@@ -134,11 +134,11 @@
                 <div class="col-md-6">
                     <h6>partials/ticket-row.blade.php</h6>
                     <pre class="bg-light p-3 rounded"><code>&lt;tr&gt;
-    &lt;td&gt;@{{ $ticket->id }}&lt;/td&gt;
-    &lt;td&gt;@{{ $ticket->title }}&lt;/td&gt;
+    &lt;td&gt;&#123;&#123; $ticket->id &#125;&#125;&lt;/td&gt;
+    &lt;td&gt;&#123;&#123; $ticket->title &#125;&#125;&lt;/td&gt;
     &lt;td&gt;
         &lt;span class="badge"&gt;
-            @{{ $ticket->status }}
+            &#123;&#123; $ticket->status &#125;&#125;
         &lt;/span&gt;
     &lt;/td&gt;
 &lt;/tr&gt;</code></pre>

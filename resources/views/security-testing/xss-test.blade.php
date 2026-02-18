@@ -1,6 +1,6 @@
 {{-- ============================================ --}}
 {{-- Security Testing - XSS Test --}}
-{{-- 
+{{--
 {{-- Materi Hari 5 - Lab Lengkap XSS Prevention --}}
 {{-- ============================================ --}}
 
@@ -38,14 +38,14 @@
                     <p class="small text-muted">
                         Test bagaimana aplikasi menangani input dari URL parameter.
                     </p>
-                    
+
                     <form method="GET" action="{{ route('security-testing.xss') }}">
                         <div class="mb-3">
                             <label for="testInput" class="form-label">Test Input</label>
-                            <input type="text" 
-                                   class="form-control" 
+                            <input type="text"
+                                   class="form-control"
                                    id="testInput"
-                                   name="test" 
+                                   name="test"
                                    value="{{ $testInput }}"
                                    placeholder="Masukkan payload XSS...">
                         </div>
@@ -57,19 +57,19 @@
                     @if($testInput)
                         <div class="mt-4">
                             <h6>Result:</h6>
-                            
+
                             {{-- Secure Output --}}
                             <div class="alert alert-success">
                                 <strong>✅ Secure (auto-escaped):</strong><br>
-                                <code>@{{ $testInput }}</code>
+                                <code>&#123;&#123; $testInput &#125;&#125;</code>
                                 <hr>
                                 Output: {{ $testInput }}
                             </div>
-                            
+
                             {{-- Vulnerable Output (untuk demonstrasi) --}}
                             <div class="alert alert-danger">
                                 <strong>❌ Vulnerable (raw output):</strong><br>
-                                <code>@{!! $testInput !!}</code>
+                                <code>&#123;!! $testInput !!&#125;</code>
                                 <hr>
                                 <div class="border p-2 bg-white">
                                     {{-- WARNING: Ini vulnerable! Hanya untuk demo --}}
@@ -105,15 +105,15 @@
                             '<iframe src="javascript:alert(\'XSS\')">',
                         ];
                     @endphp
-                    
+
                     @foreach($payloads as $index => $payload)
                         <div class="input-group input-group-sm mb-2">
-                            <input type="text" 
-                                   class="form-control font-monospace" 
-                                   value="{{ $payload }}" 
+                            <input type="text"
+                                   class="form-control font-monospace"
+                                   value="{{ $payload }}"
                                    id="payload{{ $index }}"
                                    readonly>
-                            <button class="btn btn-outline-secondary" 
+                            <button class="btn btn-outline-secondary"
                                     type="button"
                                     onclick="copyPayload('payload{{ $index }}')">
                                 <i class="bi bi-clipboard"></i>
@@ -130,15 +130,15 @@
                             '<a href="javascript:alert(\'XSS\')">Click</a>',
                         ];
                     @endphp
-                    
+
                     @foreach($eventPayloads as $index => $payload)
                         <div class="input-group input-group-sm mb-2">
-                            <input type="text" 
-                                   class="form-control font-monospace" 
-                                   value="{{ $payload }}" 
+                            <input type="text"
+                                   class="form-control font-monospace"
+                                   value="{{ $payload }}"
                                    id="eventPayload{{ $index }}"
                                    readonly>
-                            <button class="btn btn-outline-secondary" 
+                            <button class="btn btn-outline-secondary"
                                     type="button"
                                     onclick="copyPayload('eventPayload{{ $index }}')">
                                 <i class="bi bi-clipboard"></i>
@@ -154,15 +154,15 @@
                             '\\x3cscript\\x3ealert("XSS")\\x3c/script\\x3e',
                         ];
                     @endphp
-                    
+
                     @foreach($encodedPayloads as $index => $payload)
                         <div class="input-group input-group-sm mb-2">
-                            <input type="text" 
-                                   class="form-control font-monospace" 
-                                   value="{{ $payload }}" 
+                            <input type="text"
+                                   class="form-control font-monospace"
+                                   value="{{ $payload }}"
                                    id="encodedPayload{{ $index }}"
                                    readonly>
-                            <button class="btn btn-outline-secondary" 
+                            <button class="btn btn-outline-secondary"
                                     type="button"
                                     onclick="copyPayload('encodedPayload{{ $index }}')">
                                 <i class="bi bi-clipboard"></i>
@@ -242,11 +242,11 @@
     {{-- Quick Links --}}
     <div class="mt-4">
         <div class="d-flex gap-2 flex-wrap">
-            <a href="{{ route('xss-lab.reflected.secure') }}?q={{ urlencode('<script>alert(1)</script>') }}" 
+            <a href="{{ route('xss-lab.reflected.secure') }}?q={{ urlencode('<script>alert(1)</script>') }}"
                class="btn btn-success" target="_blank">
                 <i class="bi bi-lock"></i> Test Secure Page
             </a>
-            <a href="{{ route('xss-lab.reflected.vulnerable') }}?q={{ urlencode('<script>alert(1)</script>') }}" 
+            <a href="{{ route('xss-lab.reflected.vulnerable') }}?q={{ urlencode('<script>alert(1)</script>') }}"
                class="btn btn-danger" target="_blank">
                 <i class="bi bi-unlock"></i> Test Vulnerable Page
             </a>
@@ -263,14 +263,14 @@
         const input = document.getElementById(elementId);
         input.select();
         navigator.clipboard.writeText(input.value);
-        
+
         // Visual feedback
         const btn = input.nextElementSibling;
         const originalHtml = btn.innerHTML;
         btn.innerHTML = '<i class="bi bi-check"></i>';
         btn.classList.remove('btn-outline-secondary');
         btn.classList.add('btn-success');
-        
+
         setTimeout(() => {
             btn.innerHTML = originalHtml;
             btn.classList.remove('btn-success');

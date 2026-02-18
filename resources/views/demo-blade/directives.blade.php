@@ -51,7 +51,7 @@
                     <div class="bg-light p-3 rounded mb-3">
                         @unless($user->role === 'guest')
                             <p class="mb-0">
-                                <i class="bi bi-box-arrow-right"></i> 
+                                <i class="bi bi-box-arrow-right"></i>
                                 User bukan guest, tampilkan tombol logout
                             </p>
                         @endunless
@@ -141,7 +141,7 @@
                         </tbody>
                     </table>
                     <small class="text-muted">
-                        Total: {{ $tickets->count() }} items | 
+                        Total: {{ $tickets->count() }} items |
                         Remaining di akhir: 0
                     </small>
                 </div>
@@ -221,14 +221,14 @@
         <div class="card-body">
             <pre class="bg-light p-3 rounded"><code>{{-- Contoh penggunaan $loop variable --}}
 @@foreach($tickets as $ticket)
-    &lt;tr class="@{{ $loop->even ? 'bg-gray' : '' }}"&gt;
-        &lt;td&gt;@{{ $loop->iteration }}&lt;/td&gt;
-        &lt;td&gt;@{{ $ticket->title }}&lt;/td&gt;
+    &lt;tr class="&#123;&#123; $loop->even ? 'bg-gray' : '' &#125;&#125;"&gt;
+        &lt;td&gt;&#123;&#123; $loop->iteration &#125;&#125;&lt;/td&gt;
+        &lt;td&gt;&#123;&#123; $ticket->title &#125;&#125;&lt;/td&gt;
         @@if($loop->first)
             &lt;td&gt;Ini item pertama!&lt;/td&gt;
         @@endif
         @@if($loop->last)
-            &lt;td&gt;Total: @{{ $loop->count }} items&lt;/td&gt;
+            &lt;td&gt;Total: &#123;&#123; $loop->count &#125;&#125; items&lt;/td&gt;
         @@endif
     &lt;/tr&gt;
 @@endforeach</code></pre>

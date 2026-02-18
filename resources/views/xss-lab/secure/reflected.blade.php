@@ -19,7 +19,7 @@
     <div class="alert alert-success">
         <h5><i class="bi bi-shield-check"></i> HALAMAN SECURE</h5>
         <p class="mb-0">
-            Halaman ini menggunakan Blade auto-escape @{{ }} untuk mencegah XSS.
+            Halaman ini menggunakan Blade auto-escape <code>&#123;&#123; &#125;&#125;</code> untuk mencegah XSS.
         </p>
     </div>
 
@@ -35,7 +35,7 @@
                     {{-- Form Pencarian --}}
                     <form action="{{ route('xss-lab.reflected.secure') }}" method="GET" class="mb-4">
                         <div class="input-group">
-                            <input type="text" name="q" class="form-control" 
+                            <input type="text" name="q" class="form-control"
                                    placeholder="Cari tiket..."
                                    value="{{ $searchQuery }}">
                             <button type="submit" class="btn btn-success">
@@ -69,9 +69,8 @@
                     <h6 class="mb-0"><i class="bi bi-code-slash"></i> Kode Secure</h6>
                 </div>
                 <div class="card-body">
-                    <pre class="bg-light p-3 rounded"><code>{{-- ✅ SECURE CODE --}}
-&lt;div class="alert"&gt;
-    Hasil pencarian untuk: @{{ $searchQuery }}
+                    <pre class="bg-light p-3 rounded"><code>&lt;div class="alert"&gt;
+    Hasil pencarian untuk: &#123;&#123; $searchQuery &#125;&#125;
 &lt;/div&gt;
 
 {{-- Blade otomatis memanggil htmlspecialchars() --}}
@@ -90,14 +89,14 @@
                     <div class="row">
                         <div class="col-md-6">
                             <h6 class="text-danger">❌ Vulnerable:</h6>
-                            <pre class="bg-light p-2 rounded"><code>@{!! $searchQuery !!}</code></pre>
+                            <pre class="bg-light p-2 rounded"><code>&#123;!! $searchQuery !!&#125;</code></pre>
                             <p class="small text-muted">
                                 User input langsung di-render tanpa escape
                             </p>
                         </div>
                         <div class="col-md-6">
                             <h6 class="text-success">✅ Secure:</h6>
-                            <pre class="bg-light p-2 rounded"><code>@{{ $searchQuery }}</code></pre>
+                            <pre class="bg-light p-2 rounded"><code>&#123;&#123; $searchQuery &#125;&#125;</code></pre>
                             <p class="small text-muted">
                                 Blade auto-escape mencegah eksekusi script
                             </p>
@@ -115,16 +114,16 @@
                 </div>
                 <div class="card-body">
                     <p>Coba masukkan payload yang sama:</p>
-                    
+
                     <div class="mb-2">
                         <code class="d-block bg-light p-2 rounded">&lt;script&gt;alert('XSS')&lt;/script&gt;</code>
                     </div>
-                    
+
                     <hr>
-                    
+
                     <p class="small text-success mb-0">
                         <i class="bi bi-check-circle"></i>
-                        Script akan ditampilkan sebagai <strong>TEKS</strong>, 
+                        Script akan ditampilkan sebagai <strong>TEKS</strong>,
                         bukan dieksekusi!
                     </p>
                 </div>
@@ -147,8 +146,8 @@
                 </div>
                 <div class="card-body small">
                     <ul class="mb-0">
-                        <li>Selalu gunakan <code>@{{ }}</code> untuk output</li>
-                        <li>Hindari <code>@{!! !!}</code> untuk user input</li>
+                        <li>Selalu gunakan <code>&#123;&#123; &#125;&#125;</code> untuk output</li>
+                        <li>Hindari <code>&#123;!! !!&#125;</code> untuk user input</li>
                         <li>Validasi input di server</li>
                         <li>Gunakan Content Security Policy</li>
                     </ul>

@@ -19,7 +19,7 @@
     <div class="alert alert-success">
         <h5><i class="bi bi-shield-check"></i> HALAMAN SECURE</h5>
         <p class="mb-0">
-            Komentar ditampilkan dengan Blade auto-escape @{{ }}. 
+            Komentar ditampilkan dengan Blade auto-escape <code>&#123;&#123; &#125;&#125;</code>.
             Script berbahaya akan ditampilkan sebagai teks biasa.
         </p>
     </div>
@@ -30,7 +30,7 @@
             <div class="card mb-4">
                 <div class="card-header">
                     <h5 class="mb-0">
-                        <i class="bi bi-ticket"></i> 
+                        <i class="bi bi-ticket"></i>
                         Tiket: {{ $ticket->title ?? 'Sample Ticket' }}
                     </h5>
                 </div>
@@ -50,11 +50,11 @@
                     <form action="{{ route('xss-lab.stored.secure.store') }}" method="POST">
                         @csrf
                         <input type="hidden" name="ticket_id" value="{{ $ticket->id ?? 1 }}">
-                        
+
                         <div class="mb-3">
                             <label for="author_name" class="form-label">Nama</label>
-                            <input type="text" name="author_name" id="author_name" 
-                                   class="form-control @error('author_name') is-invalid @enderror" 
+                            <input type="text" name="author_name" id="author_name"
+                                   class="form-control @error('author_name') is-invalid @enderror"
                                    required maxlength="100"
                                    value="{{ old('author_name') }}"
                                    placeholder="Masukkan nama Anda">
@@ -62,18 +62,18 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        
+
                         <div class="mb-3">
                             <label for="content" class="form-label">Komentar</label>
-                            <textarea name="content" id="content" rows="3" 
-                                      class="form-control @error('content') is-invalid @enderror" 
+                            <textarea name="content" id="content" rows="3"
+                                      class="form-control @error('content') is-invalid @enderror"
                                       required maxlength="1000"
                                       placeholder="Tulis komentar Anda...">{{ old('content') }}</textarea>
                             @error('content')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        
+
                         <button type="submit" class="btn btn-success">
                             <i class="bi bi-send"></i> Kirim Komentar
                         </button>
@@ -85,7 +85,7 @@
             <div class="card border-success">
                 <div class="card-header bg-success text-white">
                     <h5 class="mb-0">
-                        <i class="bi bi-chat-left-text"></i> 
+                        <i class="bi bi-chat-left-text"></i>
                         Komentar ({{ $comments->count() }})
                     </h5>
                 </div>
@@ -124,10 +124,10 @@
                     <pre class="bg-light p-3 rounded"><code>@foreach($comments as $comment)
     &lt;div&gt;
         {{-- ✅ SECURE! Auto-escape --}}
-        &lt;strong&gt;@{{ $comment->author_name }}&lt;/strong&gt;
-        
+        &lt;strong&gt;&#123;&#123; $comment->author_name &#125;&#125;&lt;/strong&gt;
+
         {{-- ✅ SECURE! nl2br() + e() untuk line breaks --}}
-        &lt;p&gt;{!! nl2br(e($comment->content)) !!}&lt;/p&gt;
+        &lt;p&gt;&#123;!! nl2br(e($comment->content)) !!&#125;&lt;/p&gt;
     &lt;/div&gt;
 @endforeach
 
@@ -166,18 +166,18 @@ Comment::create($validated);
                 </div>
                 <div class="card-body">
                     <p>Coba submit payload yang sama:</p>
-                    
+
                     <div class="mb-3">
                         <code class="d-block bg-light p-2 rounded small">
                             &lt;script&gt;alert('XSS')&lt;/script&gt;
                         </code>
                     </div>
-                    
+
                     <hr>
-                    
+
                     <div class="alert alert-success small mb-0">
                         <i class="bi bi-check-circle"></i>
-                        <strong>Aman!</strong> Script akan ditampilkan 
+                        <strong>Aman!</strong> Script akan ditampilkan
                         sebagai TEKS biasa, tidak dieksekusi.
                     </div>
                 </div>
@@ -201,7 +201,7 @@ Comment::create($validated);
                 <div class="card-body small">
                     <ul class="mb-0">
                         <li>Validasi semua input di server</li>
-                        <li>Gunakan <code>@{{ }}</code> untuk output</li>
+                        <li>Gunakan <code>&#123;&#123; &#125;&#125;</code> untuk output</li>
                         <li>Gunakan <code>e()</code> jika perlu <code>nl2br()</code></li>
                         <li>Set <code>maxlength</code> di form dan validasi</li>
                         <li>Pertimbangkan HTML Purifier untuk rich text</li>

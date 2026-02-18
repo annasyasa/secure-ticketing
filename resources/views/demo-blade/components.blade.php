@@ -33,7 +33,7 @@
                     <p class="text-muted">
                         Component: <code>resources/views/components/alert.blade.php</code>
                     </p>
-                    
+
                     {{-- Penggunaan component x-alert --}}
                     <x-alert type="success" message="Ini adalah alert sukses!" />
                     <x-alert type="danger" message="Ini adalah alert error!" />
@@ -59,7 +59,7 @@
                     <p class="text-muted">
                         Component: <code>resources/views/components/badge.blade.php</code>
                     </p>
-                    
+
                     <div class="d-flex gap-2 flex-wrap mb-3">
                         <x-badge type="primary">Primary</x-badge>
                         <x-badge type="secondary">Secondary</x-badge>
@@ -68,7 +68,7 @@
                         <x-badge type="warning">Warning</x-badge>
                         <x-badge type="info">Info</x-badge>
                     </div>
-                    
+
                     <p class="mb-2">Dengan pill style:</p>
                     <div class="d-flex gap-2 flex-wrap">
                         <x-badge type="primary" :pill="true">Pill Badge</x-badge>
@@ -95,13 +95,13 @@
                     <p class="text-muted">
                         Component: <code>resources/views/components/card.blade.php</code>
                     </p>
-                    
+
                     {{-- Penggunaan x-card dengan slot --}}
                     <x-card title="Judul Card">
                         <p>Ini adalah konten di dalam <strong>slot</strong> default.</p>
                         <p class="mb-0">Slot memungkinkan kita memasukkan HTML apapun ke dalam component.</p>
                     </x-card>
-                    
+
                     <div class="mt-3">
                         <x-card title="Card dengan Attributes" class="border-primary">
                             <p class="mb-0">Card ini memiliki class tambahan <code>border-primary</code></p>
@@ -131,7 +131,7 @@
                     <p class="text-muted">
                         Component: <code>resources/views/components/ticket-card.blade.php</code>
                     </p>
-                    
+
                     {{-- Penggunaan x-ticket-card --}}
                     <x-ticket-card :ticket="$ticket">
                         <p class="mb-2">{{ Str::limit($ticket->description ?? 'Deskripsi tiket...', 100) }}</p>
@@ -141,7 +141,7 @@
                 <div class="card-footer bg-light">
                     <small><strong>Penggunaan:</strong></small>
                     <pre class="mb-0 mt-2"><code>&lt;x-ticket-card :ticket="$ticket"&gt;
-    &lt;p&gt;@{{ $ticket->description }}&lt;/p&gt;
+    &lt;p&gt;&#123;&#123; $ticket->description &#125;&#125;&lt;/p&gt;
     &lt;a href="#"&gt;Lihat Detail&lt;/a&gt;
 &lt;/x-ticket-card&gt;</code></pre>
                 </div>
@@ -161,9 +161,9 @@
 @props(['type' => 'info', 'message', 'dismissible' => true])
 
 {{-- $attributes berisi semua attribute HTML yang tidak ada di @props --}}
-&lt;div @{{ $attributes->merge(['class' => 'alert alert-' . $type]) }}&gt;
-    @{{ $message }}
-    
+&lt;div &#123;&#123; $attributes->merge(['class' => 'alert alert-' . $type]) &#125;&#125;&gt;
+    &#123;&#123; $message &#125;&#125;
+
     @if($dismissible)
         &lt;button type="button" class="btn-close"&gt;&lt;/button&gt;
     @endif

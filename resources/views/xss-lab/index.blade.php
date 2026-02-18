@@ -18,7 +18,7 @@
         </p>
         <div class="alert alert-danger d-inline-block">
             <i class="bi bi-exclamation-triangle"></i>
-            <strong>PERINGATAN:</strong> Lab ini HANYA untuk pembelajaran. 
+            <strong>PERINGATAN:</strong> Lab ini HANYA untuk pembelajaran.
             Jangan gunakan teknik ini untuk menyerang website lain!
         </div>
     </div>
@@ -27,7 +27,7 @@
     <div class="text-end mb-4">
         <form action="{{ route('xss-lab.reset-comments') }}" method="POST" class="d-inline">
             @csrf
-            <button type="submit" class="btn btn-outline-secondary btn-sm" 
+            <button type="submit" class="btn btn-outline-secondary btn-sm"
                     onclick="return confirm('Reset semua komentar?')">
                 <i class="bi bi-arrow-clockwise"></i> Reset Comments
             </button>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="card-body">
                     <p>
-                        Payload dikirim via URL/request dan langsung di-reflect 
+                        Payload dikirim via URL/request dan langsung di-reflect
                         ke response tanpa disimpan.
                     </p>
                     <ul class="small">
@@ -61,11 +61,11 @@
                 </div>
                 <div class="card-footer">
                     <div class="d-flex gap-2">
-                        <a href="{{ route('xss-lab.reflected.vulnerable') }}" 
+                        <a href="{{ route('xss-lab.reflected.vulnerable') }}"
                            class="btn btn-danger flex-fill">
                             <i class="bi bi-unlock"></i> Vulnerable
                         </a>
-                        <a href="{{ route('xss-lab.reflected.secure') }}" 
+                        <a href="{{ route('xss-lab.reflected.secure') }}"
                            class="btn btn-success flex-fill">
                             <i class="bi bi-lock"></i> Secure
                         </a>
@@ -86,7 +86,7 @@
                 </div>
                 <div class="card-body">
                     <p>
-                        Payload disimpan di database dan dieksekusi setiap kali 
+                        Payload disimpan di database dan dieksekusi setiap kali
                         halaman dikunjungi.
                     </p>
                     <ul class="small">
@@ -100,11 +100,11 @@
                 </div>
                 <div class="card-footer">
                     <div class="d-flex gap-2">
-                        <a href="{{ route('xss-lab.stored.vulnerable') }}" 
+                        <a href="{{ route('xss-lab.stored.vulnerable') }}"
                            class="btn btn-danger flex-fill">
                             <i class="bi bi-unlock"></i> Vulnerable
                         </a>
-                        <a href="{{ route('xss-lab.stored.secure') }}" 
+                        <a href="{{ route('xss-lab.stored.secure') }}"
                            class="btn btn-success flex-fill">
                             <i class="bi bi-lock"></i> Secure
                         </a>
@@ -125,7 +125,7 @@
                 </div>
                 <div class="card-body">
                     <p>
-                        Eksploitasi terjadi di client-side. Payload tidak pernah 
+                        Eksploitasi terjadi di client-side. Payload tidak pernah
                         dikirim ke server.
                     </p>
                     <ul class="small">
@@ -139,11 +139,11 @@
                 </div>
                 <div class="card-footer">
                     <div class="d-flex gap-2">
-                        <a href="{{ route('xss-lab.dom.vulnerable') }}" 
+                        <a href="{{ route('xss-lab.dom.vulnerable') }}"
                            class="btn btn-danger flex-fill">
                             <i class="bi bi-unlock"></i> Vulnerable
                         </a>
-                        <a href="{{ route('xss-lab.dom.secure') }}" 
+                        <a href="{{ route('xss-lab.dom.secure') }}"
                            class="btn btn-success flex-fill">
                             <i class="bi bi-lock"></i> Secure
                         </a>
@@ -164,27 +164,27 @@
         </div>
         <div class="card-body">
             <p class="text-muted">Copy payload di bawah untuk testing di halaman vulnerable:</p>
-            
+
             <div class="row">
                 <div class="col-md-6">
                     <h6>Basic Payloads:</h6>
                     <div class="bg-light p-2 rounded mb-2">
                         <code id="payload1">&lt;script&gt;alert('XSS')&lt;/script&gt;</code>
-                        <button class="btn btn-sm btn-outline-secondary float-end" 
+                        <button class="btn btn-sm btn-outline-secondary float-end"
                                 onclick="copyPayload('payload1')">
                             <i class="bi bi-clipboard"></i>
                         </button>
                     </div>
                     <div class="bg-light p-2 rounded mb-2">
                         <code id="payload2">&lt;img src=x onerror=alert('XSS')&gt;</code>
-                        <button class="btn btn-sm btn-outline-secondary float-end" 
+                        <button class="btn btn-sm btn-outline-secondary float-end"
                                 onclick="copyPayload('payload2')">
                             <i class="bi bi-clipboard"></i>
                         </button>
                     </div>
                     <div class="bg-light p-2 rounded mb-2">
                         <code id="payload3">&lt;svg onload=alert('XSS')&gt;</code>
-                        <button class="btn btn-sm btn-outline-secondary float-end" 
+                        <button class="btn btn-sm btn-outline-secondary float-end"
                                 onclick="copyPayload('payload3')">
                             <i class="bi bi-clipboard"></i>
                         </button>
@@ -194,21 +194,21 @@
                     <h6>Advanced Payloads:</h6>
                     <div class="bg-light p-2 rounded mb-2">
                         <code id="payload4">&lt;body onload=alert('XSS')&gt;</code>
-                        <button class="btn btn-sm btn-outline-secondary float-end" 
+                        <button class="btn btn-sm btn-outline-secondary float-end"
                                 onclick="copyPayload('payload4')">
                             <i class="bi bi-clipboard"></i>
                         </button>
                     </div>
                     <div class="bg-light p-2 rounded mb-2">
                         <code id="payload5">&lt;input onfocus=alert('XSS') autofocus&gt;</code>
-                        <button class="btn btn-sm btn-outline-secondary float-end" 
+                        <button class="btn btn-sm btn-outline-secondary float-end"
                                 onclick="copyPayload('payload5')">
                             <i class="bi bi-clipboard"></i>
                         </button>
                     </div>
                     <div class="bg-light p-2 rounded mb-2">
                         <code id="payload6">&lt;marquee onstart=alert('XSS')&gt;</code>
-                        <button class="btn btn-sm btn-outline-secondary float-end" 
+                        <button class="btn btn-sm btn-outline-secondary float-end"
                                 onclick="copyPayload('payload6')">
                             <i class="bi bi-clipboard"></i>
                         </button>
@@ -224,7 +224,7 @@
     <div class="card mt-4">
         <div class="card-header bg-secondary text-white">
             <h5 class="mb-0">
-                <i class="bi bi-braces"></i> Perbandingan @{{ }} vs @{!! !!}
+                <i class="bi bi-braces"></i> Perbandingan &#123;&#123; &#125;&#125; vs &#123;!! !!&#125;
             </h5>
         </div>
         <div class="card-body">
@@ -232,17 +232,17 @@
                 $maliciousInput = '<script>alert("XSS")</script>';
                 $safeHtml = '<strong>Teks tebal</strong>';
             @endphp
-            
+
             <div class="row">
                 <div class="col-md-6">
                     <div class="card border-success">
                         <div class="card-header bg-success text-white">
-                            ✅ AMAN: @{{ $input }}
+                            ✅ AMAN: &#123;&#123; $input &#125;&#125;
                         </div>
                         <div class="card-body">
                             <p><strong>Input:</strong></p>
                             <pre class="bg-light p-2">{{ $maliciousInput }}</pre>
-                            
+
                             <p><strong>Output:</strong></p>
                             <div class="bg-light p-3 border rounded">
                                 {{ $maliciousInput }}
@@ -256,12 +256,12 @@
                 <div class="col-md-6">
                     <div class="card border-danger">
                         <div class="card-header bg-danger text-white">
-                            ❌ BERBAHAYA: {!! $input !!}
+                            ❌ BERBAHAYA: &#123;!! $input !!&#125;
                         </div>
                         <div class="card-body">
                             <p><strong>Input:</strong></p>
                             <pre class="bg-light p-2">{{ $maliciousInput }}</pre>
-                            
+
                             <p><strong>Output:</strong></p>
                             <div class="bg-light p-3 border rounded">
                                 {{-- JANGAN LAKUKAN INI dengan user input! --}}
@@ -295,12 +295,12 @@
 function copyPayload(elementId) {
     const element = document.getElementById(elementId);
     const text = element.textContent;
-    
+
     // Decode HTML entities for copying
     const textarea = document.createElement('textarea');
     textarea.innerHTML = text;
     const decoded = textarea.value;
-    
+
     navigator.clipboard.writeText(decoded).then(() => {
         alert('Payload copied!');
     });
