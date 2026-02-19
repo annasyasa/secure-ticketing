@@ -8,12 +8,12 @@ use Illuminate\View\View;
 
 /**
  * ValidationLabController
- * 
+ *
  * Controller untuk demo Lab Input Validation.
  * Mendemonstrasikan perbedaan antara:
  * - Form TANPA server-side validation (vulnerable)
  * - Form DENGAN server-side validation (secure)
- * 
+ *
  * Materi Minggu 3 - Hari 2: Input Validation
  */
 class ValidationLabController extends Controller
@@ -42,10 +42,10 @@ class ValidationLabController extends Controller
 
     /**
      * Process vulnerable form submission
-     * 
+     *
      * ❌ VULNERABLE: Tidak ada server-side validation!
      * Data langsung diterima tanpa pengecekan apapun.
-     * 
+     *
      * RISIKO:
      * - SQL Injection (jika langsung ke query)
      * - XSS (jika langsung ditampilkan)
@@ -100,9 +100,9 @@ class ValidationLabController extends Controller
 
     /**
      * Process secure form submission
-     * 
+     *
      * ✅ SECURE: Semua input divalidasi di server-side!
-     * 
+     *
      * FLOW:
      * 1. validate() dipanggil
      * 2. Jika GAGAL: auto redirect back dengan errors
@@ -115,16 +115,16 @@ class ValidationLabController extends Controller
         $validated = $request->validate([
             // Name: wajib, string, 2-100 karakter
             'name' => 'required|string|min:2|max:100',
-            
+
             // Email: wajib, format email valid
             'email' => 'required|email:rfc,dns',
-            
+
             // Age: wajib, integer, 17-100 tahun
             'age' => 'required|integer|min:17|max:100',
-            
+
             // Priority: wajib, harus salah satu dari whitelist
             'priority' => 'required|in:low,medium,high',
-            
+
             // Message: wajib, string, 10-1000 karakter
             'message' => 'required|string|min:10|max:1000',
         ], [
@@ -132,18 +132,18 @@ class ValidationLabController extends Controller
             'name.required' => 'Nama wajib diisi.',
             'name.min' => 'Nama minimal :min karakter.',
             'name.max' => 'Nama maksimal :max karakter.',
-            
+
             'email.required' => 'Email wajib diisi.',
             'email.email' => 'Format email tidak valid.',
-            
+
             'age.required' => 'Umur wajib diisi.',
             'age.integer' => 'Umur harus berupa angka.',
             'age.min' => 'Umur minimal :min tahun.',
             'age.max' => 'Umur maksimal :max tahun.',
-            
+
             'priority.required' => 'Prioritas wajib dipilih.',
             'priority.in' => 'Prioritas tidak valid.',
-            
+
             'message.required' => 'Pesan wajib diisi.',
             'message.min' => 'Pesan minimal :min karakter.',
             'message.max' => 'Pesan maksimal :max karakter.',
@@ -179,7 +179,7 @@ class ValidationLabController extends Controller
 
     /**
      * Demo API endpoint tanpa CSRF (untuk testing dengan curl/Postman)
-     * 
+     *
      * ⚠️ HANYA UNTUK DEMO - Jangan gunakan di production!
      */
     public function apiVulnerable(Request $request)
