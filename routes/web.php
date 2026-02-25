@@ -292,6 +292,14 @@ Route::prefix('sqli-lab')->name('sqli-lab.')->group(function () {
     Route::post('/vulnerable-login', [SqliLabController::class, 'vulnerableLoginSubmit'])
         ->name('vulnerable-login-submit');
 
+    // Blind SQL Injection Demo
+    Route::get('/blind-sqli', [SqliLabController::class, 'blindSqli'])
+        ->name('blind-sqli');
+    Route::post('/blind-sqli/boolean', [SqliLabController::class, 'blindSqliBooleanCheck'])
+        ->name('blind-sqli-boolean');
+    Route::post('/blind-sqli/time', [SqliLabController::class, 'blindSqliTimeCheck'])
+        ->name('blind-sqli-time');
+
     // ============================================
     // SECURE ENDPOINTS (BEST PRACTICE)
     // ============================================

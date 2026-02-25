@@ -196,7 +196,7 @@ DB::select(
                     <div class="card h-100 border-warning">
                         <div class="card-header bg-warning text-dark">
                             <h5 class="mb-0">
-                                <i class="bi bi-key"></i> Login Bypass
+                                <i class="bi bi-key"></i> Login Bypass (In-band)
                             </h5>
                         </div>
                         <div class="card-body">
@@ -216,6 +216,36 @@ DB::select(
                         <div class="card-footer">
                             <a href="{{ route('sqli-lab.vulnerable-login') }}" class="btn btn-warning w-100">
                                 <i class="bi bi-unlock"></i> Coba Bypass
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Blind SQL Injection --}}
+                <div class="col-md-6">
+                    <div class="card h-100 border-dark">
+                        <div class="card-header bg-dark text-white">
+                            <h5 class="mb-0">
+                                <i class="bi bi-eye-slash"></i> Blind SQL Injection
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted">
+                                Teknik SQLi ketika tidak ada output langsung ke attacker.
+                            </p>
+                            <ul class="small">
+                                <li>Boolean-based Blind SQLi</li>
+                                <li>Time-based Blind SQLi</li>
+                                <li>Extract data char-by-char</li>
+                            </ul>
+                            <div class="alert alert-dark py-1 small mb-0">
+                                <i class="bi bi-clock"></i>
+                                Advanced technique!
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{{ route('sqli-lab.blind-sqli') }}" class="btn btn-dark w-100">
+                                <i class="bi bi-eye-slash"></i> Coba Blind SQLi
                             </a>
                         </div>
                     </div>

@@ -376,8 +376,8 @@ public function secureLogin(Request $request)
                 <a href="{{ route('sqli-lab.vulnerable-search') }}" class="btn btn-outline-danger">
                     <i class="bi bi-arrow-left"></i> Vulnerable Search
                 </a>
-                <a href="{{ route('sqli-lab.secure-search') }}" class="btn btn-success">
-                    Lihat Cara Aman <i class="bi bi-shield-check"></i>
+                <a href="{{ route('sqli-lab.blind-sqli') }}" class="btn btn-danger">
+                    Blind SQLi <i class="bi bi-arrow-right"></i>
                 </a>
             </div>
 

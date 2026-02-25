@@ -355,8 +355,8 @@ WHERE name = '\' OR \'1\'=\'1'</code></pre>
 
             {{-- Navigation --}}
             <div class="d-flex justify-content-between mt-4">
-                <a href="{{ route('sqli-lab.vulnerable-search') }}" class="btn btn-outline-danger">
-                    <i class="bi bi-arrow-left"></i> Kembali ke Vulnerable
+                <a href="{{ route('sqli-lab.blind-sqli') }}" class="btn btn-outline-danger">
+                    <i class="bi bi-arrow-left"></i> Blind SQLi
                 </a>
                 <a href="{{ route('sqli-lab.cheatsheet') }}" class="btn btn-dark">
                     Lihat Cheatsheet <i class="bi bi-file-code"></i>

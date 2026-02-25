@@ -281,4 +281,108 @@ class SqliLabController extends Controller
         return redirect()->route('sqli-lab.index')
             ->with('success', 'Demo data berhasil direset!');
     }
+
+    // ================================================================
+    // BLIND SQL INJECTION DEMO
+    // ⚠️ JANGAN GUNAKAN PATTERN INI DI PRODUCTION!
+    // ================================================================
+
+    /**
+     * Halaman Blind SQLi Demo
+     */
+    public function blindSqli(): View
+    {
+        return view('sqli-lab.blind-sqli');
+    }
+
+    /**
+     * Boolean-based Blind SQLi - Check if user exists
+     * Hanya return true/false, tidak ada data detail
+     */
+    public function blindSqliBooleanCheck(Request $request)
+    {
+        $username = $request->input('username', '');
+        $startTime = microtime(true);
+
+        // ❌ VULNERABLE: String concatenation!
+        $query = "SELECT COUNT(*) as count FROM sqli_lab_users WHERE username = '{$username}'";
+
+        $exists = false;
+        $error = null;
+
+        try {
+            $result = DB::select($query);
+            $exists = $result[0]->count > 0;
+        } catch (\Exception $e) {
+            $error = $e->getMessage();
+        }
+
+        $executionTime = round((microtime(true) - $startTime) * 1000, 2);
+
+        // Return JSON untuk AJAX requests
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'exists' => $exists,
+                'query' => $query,
+                'executionTime' => $executionTime,
+                'error' => $error,
+            ]);
+        }
+
+        return view('sqli-lab.blind-sqli', [
+            'booleanResult' => [
+                'username' => $username,
+                'exists' => $exists,
+                'query' => $query,
+                'executionTime' => $executionTime,
+                'error' => $error,
+            ],
+        ]);
+    }
+
+    /**
+     * Time-based Blind SQLi - Vulnerable endpoint
+     * Query structure memungkinkan pg_sleep dalam single statement
+     */
+    public function blindSqliTimeCheck(Request $request)
+    {
+        $id = $request->input('id', '1');
+        $startTime = microtime(true);
+
+        // ❌ VULNERABLE: String concatenation dengan ID!
+        // pg_sleep() bisa diinjeksi sebagai bagian dari WHERE clause
+        // pg_sleep() returns void, dan "void IS NULL" = true di PostgreSQL
+        $query = "SELECT name FROM sqli_lab_products WHERE id = {$id}";
+
+        $productName = null;
+        $error = null;
+
+        try {
+            $result = DB::select($query);
+            $productName = $result[0]->name ?? null;
+        } catch (\Exception $e) {
+            $error = $e->getMessage();
+        }
+
+        $executionTime = round((microtime(true) - $startTime) * 1000, 2);
+
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'productName' => $productName,
+                'query' => $query,
+                'executionTime' => $executionTime,
+                'error' => $error,
+            ]);
+        }
+
+        return view('sqli-lab.blind-sqli', [
+            'timeResult' => [
+                'id' => $id,
+                'productName' => $productName,
+                'query' => $query,
+                'executionTime' => $executionTime,
+                'error' => $error,
+            ],
+        ]);
+    }
 }
