@@ -8,7 +8,22 @@ use App\Http\Controllers\SqliLabController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\ValidationLabController;
 use App\Http\Controllers\XSSLabController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\VulnerableAuth\VulnerableLoginController;
+use App\Http\Controllers\VulnerableAuth\VulnerableRegisterController;
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 /*
 |--------------------------------------------------------------------------
@@ -320,3 +335,82 @@ Route::prefix('sqli-lab')->name('sqli-lab.')->group(function () {
     Route::get('/reset-data', [SqliLabController::class, 'resetData'])
         ->name('reset');
 });
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes - Authentication Lab (Minggu 4 Hari 1)
+|--------------------------------------------------------------------------
+|
+| Lab ini berisi routes untuk implementasi authentication:
+| - Secure: Menggunakan Laravel Breeze (routes/auth.php)
+| - Vulnerable: Login/Register dengan kerentanan untuk demonstrasi
+|
+*/
+
+// ============================================================================
+// Auth Lab Pages
+// ============================================================================
+Route::prefix('auth-lab')->name('auth-lab.')->group(function () {
+    Route::get('/', function () {
+        return view('auth-lab.index');
+    })->name('index');
+
+    Route::get('/comparison', function () {
+        return view('auth-lab.comparison');
+    })->name('comparison');
+});
+
+// ============================================================================
+// Secure Dashboard (Requires Auth)
+// ============================================================================
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('auth.dashboard');
+    })->name('dashboard');
+});
+
+// ============================================================================
+// VULNERABLE Authentication Routes (Demo Only)
+// ============================================================================
+Route::prefix('vulnerable')->name('vulnerable.')->group(function () {
+
+    // Login - No middleware protection
+    Route::get('/login', [VulnerableLoginController::class, 'create'])
+        ->name('login');
+    Route::post('/login', [VulnerableLoginController::class, 'store'])
+        ->name('login.submit');
+
+    // Register - No middleware protection
+    Route::get('/register', [VulnerableRegisterController::class, 'create'])
+        ->name('register');
+    Route::post('/register', [VulnerableRegisterController::class, 'store'])
+        ->name('register.submit');
+
+    // Dashboard - Uses session instead of auth middleware
+    Route::get('/dashboard', function () {
+        if (!session()->has('vulnerable_user')) {
+            return redirect()->route('vulnerable.login');
+        }
+        // Pass user from session to view
+        return view('vulnerable-auth.dashboard', [
+            'user' => session('vulnerable_user'),
+        ]);
+    })->name('dashboard');
+
+    // Logout
+    Route::post('/logout', [VulnerableLoginController::class, 'destroy'])
+        ->name('logout');
+
+    // DEMO: Show all users (Vulnerable - information disclosure)
+    Route::get('/show-users', [VulnerableRegisterController::class, 'showUsers'])
+        ->name('show-users');
+
+    // DEMO: Brute force statistics
+    Route::get('/brute-force-stats', [VulnerableLoginController::class, 'bruteForceStats'])
+        ->name('brute-force-stats');
+});
+
+// ============================================================================
+// Secure Auth Routes (Laravel Breeze)
+// ============================================================================
+require __DIR__.'/auth.php';
