@@ -112,35 +112,55 @@
                         </div>
 
                         {{-- ======================================== --}}
-                        {{-- STATUS FIELD (Hanya di Edit) --}}
+                        {{-- STATUS FIELD (Admin/Staff only) --}}
+                        {{-- MINGGU 4 HARI 2: Conditional field --}}
                         {{-- ======================================== --}}
-                        <div class="mb-3">
-                            <label for="status" class="form-label">
-                                Status <span class="text-danger">*</span>
-                            </label>
+                        @if(auth()->user()->hasAnyRole(['admin', 'staff']))
+                            <div class="mb-3">
+                                <label for="status" class="form-label">
+                                    Status <span class="text-danger">*</span>
+                                    <span class="badge bg-info">Admin/Staff only</span>
+                                </label>
 
-                            <select name="status"
-                                    id="status"
-                                    class="form-select @error('status') is-invalid @enderror"
-                                    required>
-                                <option value="open"
-                                    {{ old('status', $ticket->status) == 'open' ? 'selected' : '' }}>
-                                    🔵 Open - Belum ditangani
-                                </option>
-                                <option value="in_progress"
-                                    {{ old('status', $ticket->status) == 'in_progress' ? 'selected' : '' }}>
-                                    🟡 In Progress - Sedang ditangani
-                                </option>
-                                <option value="closed"
-                                    {{ old('status', $ticket->status) == 'closed' ? 'selected' : '' }}>
-                                    🟢 Closed - Selesai
-                                </option>
-                            </select>
+                                <select name="status"
+                                        id="status"
+                                        class="form-select @error('status') is-invalid @enderror"
+                                        required>
+                                    <option value="open"
+                                        {{ old('status', $ticket->status) == 'open' ? 'selected' : '' }}>
+                                        🔵 Open - Belum ditangani
+                                    </option>
+                                    <option value="in_progress"
+                                        {{ old('status', $ticket->status) == 'in_progress' ? 'selected' : '' }}>
+                                        🟡 In Progress - Sedang ditangani
+                                    </option>
+                                    <option value="resolved"
+                                        {{ old('status', $ticket->status) == 'resolved' ? 'selected' : '' }}>
+                                        🟠 Resolved - Sudah diselesaikan
+                                    </option>
+                                    <option value="closed"
+                                        {{ old('status', $ticket->status) == 'closed' ? 'selected' : '' }}>
+                                        🟢 Closed - Selesai
+                                    </option>
+                                </select>
 
-                            @error('status')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+                                @error('status')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        @else
+                            {{-- User biasa hanya bisa lihat status --}}
+                            <div class="mb-3">
+                                <label class="form-label">Status</label>
+                                <input type="text" class="form-control" 
+                                       value="{{ ucfirst(str_replace('_', ' ', $ticket->status)) }}" 
+                                       disabled>
+                                <small class="text-muted">
+                                    <i class="bi bi-info-circle"></i> 
+                                    Status hanya bisa diubah oleh Admin/Staff
+                                </small>
+                            </div>
+                        @endif
 
                         {{-- ======================================== --}}
                         {{-- PRIORITY FIELD --}}

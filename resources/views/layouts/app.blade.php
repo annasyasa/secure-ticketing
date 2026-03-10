@@ -716,6 +716,107 @@
                     </ul>
                 </li>
 
+                {{-- Authorization (RBAC) - Minggu 4 Hari 2 --}}
+                <li class="nav-item">
+                    <a href="#authorizationLab" class="nav-link {{ request()->routeIs('authorization-lab.*') || request()->routeIs('admin.*') || request()->routeIs('dashboard') ? '' : 'collapsed' }}"
+                       data-bs-toggle="collapse" aria-expanded="{{ request()->routeIs('authorization-lab.*') || request()->routeIs('admin.*') || request()->routeIs('dashboard') ? 'true' : 'false' }}">
+                        <i class="bi bi-person-badge"></i> Authorization
+                    </a>
+                    <ul class="collapse nav-collapse {{ request()->routeIs('authorization-lab.*') || request()->routeIs('admin.*') || request()->routeIs('dashboard') ? 'show' : '' }}" id="authorizationLab">
+                        {{-- Lab Pages --}}
+                        <li class="nav-item">
+                            <a href="{{ route('authorization-lab.index') }}" class="nav-link {{ request()->routeIs('authorization-lab.index') ? 'active' : '' }}">
+                                <i class="bi bi-house"></i> Lab Overview
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('authorization-lab.login') }}" class="nav-link {{ request()->routeIs('authorization-lab.login') ? 'active' : '' }}">
+                                <i class="bi bi-box-arrow-in-right"></i> Test Login
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('authorization-lab.implementation') }}" class="nav-link {{ request()->routeIs('authorization-lab.implementation') ? 'active' : '' }}">
+                                <i class="bi bi-code-slash"></i> Implementation
+                            </a>
+                        </li>
+                        <hr class="my-1 mx-3">
+                        @auth
+                            <li class="nav-item">
+                                <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                                    <i class="bi bi-speedometer2"></i> Dashboard
+                                </a>
+                            </li>
+                            @can('access-admin')
+                            <li class="nav-item">
+                                <a href="{{ route('admin.dashboard') }}" class="nav-link text-danger {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                                    <i class="bi bi-gear"></i> Admin Panel
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.users') }}" class="nav-link text-danger {{ request()->routeIs('admin.users') ? 'active' : '' }}">
+                                    <i class="bi bi-people"></i> Manage Users
+                                </a>
+                            </li>
+                            @endcan
+                            @can('view-reports')
+                            <li class="nav-item">
+                                <a href="{{ route('admin.reports') }}" class="nav-link text-info {{ request()->routeIs('admin.reports') ? 'active' : '' }}">
+                                    <i class="bi bi-graph-up-arrow"></i> Reports
+                                </a>
+                            </li>
+                            @endcan
+                        @else
+                            <li class="nav-item">
+                                <a href="{{ route('authorization-lab.login') }}" class="nav-link text-muted">
+                                    <i class="bi bi-lock"></i> Login untuk Demo
+                                </a>
+                            </li>
+                        @endauth
+                    </ul>
+                </li>
+
+                {{-- BAC/IDOR Lab - Minggu 4 Hari 4 --}}
+                <li class="nav-item">
+                    <a href="#bacLab" class="nav-link {{ request()->routeIs('bac-lab.*') ? '' : 'collapsed' }}"
+                       data-bs-toggle="collapse" aria-expanded="{{ request()->routeIs('bac-lab.*') ? 'true' : 'false' }}">
+                        <i class="bi bi-shield-exclamation"></i> BAC/IDOR Lab
+                    </a>
+                    <ul class="collapse nav-collapse {{ request()->routeIs('bac-lab.*') ? 'show' : '' }}" id="bacLab">
+                        <li class="nav-item">
+                            <a href="{{ route('bac-lab.home') }}" class="nav-link {{ request()->routeIs('bac-lab.home') ? 'active' : '' }}">
+                                <i class="bi bi-house"></i> Overview
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            @auth
+                                <a href="{{ route('bac-lab.vulnerable.tickets.index') }}" class="nav-link text-danger {{ request()->routeIs('bac-lab.vulnerable.tickets.*') ? 'active' : '' }}">
+                                    <i class="bi bi-unlock"></i> Vulnerable (IDOR)
+                                </a>
+                            @else
+                                <a href="{{ route('bac-lab.vulnerable.login') }}" class="nav-link text-danger {{ request()->routeIs('bac-lab.vulnerable.login') ? 'active' : '' }}">
+                                    <i class="bi bi-unlock"></i> Vulnerable (IDOR)
+                                </a>
+                            @endauth
+                        </li>
+                        <li class="nav-item">
+                            @auth
+                                <a href="{{ route('bac-lab.secure.tickets.index') }}" class="nav-link text-success {{ request()->routeIs('bac-lab.secure.tickets.*') ? 'active' : '' }}">
+                                    <i class="bi bi-lock"></i> Secure (Policy)
+                                </a>
+                            @else
+                                <a href="{{ route('bac-lab.secure.login') }}" class="nav-link text-success {{ request()->routeIs('bac-lab.secure.login') ? 'active' : '' }}">
+                                    <i class="bi bi-lock"></i> Secure (Policy)
+                                </a>
+                            @endauth
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('bac-lab.comparison') }}" class="nav-link {{ request()->routeIs('bac-lab.comparison') ? 'active' : '' }}">
+                                <i class="bi bi-arrows-angle-expand"></i> Comparison
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 {{-- TOOLS --}}
                 <li class="nav-section">Tools</li>
 

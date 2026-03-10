@@ -105,21 +105,49 @@
 
                         @if($ticket->user_id === auth()->id())
                             <div class="btn-group btn-group-sm">
-                                <a href="{{ route('tickets.edit', $ticket) }}"
-                                   class="btn btn-outline-primary">
-                                    <i class="bi bi-pencil"></i> Edit
-                                </a>
-                                <form action="{{ route('tickets.destroy', $ticket) }}"
-                                      method="POST"
-                                      class="d-inline"
-                                      onsubmit="return confirm('Yakin ingin menghapus ticket ini?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-outline-danger">
-                                        <i class="bi bi-trash"></i> Hapus
-                                    </button>
-                                </form>
+                                @can('update', $ticket)
+                                    <a href="{{ route('tickets.edit', $ticket) }}"
+                                       class="btn btn-outline-primary">
+                                        <i class="bi bi-pencil"></i> Edit
+                                    </a>
+                                @endcan
+                                @can('delete', $ticket)
+                                    <form action="{{ route('tickets.destroy', $ticket) }}"
+                                          method="POST"
+                                          class="d-inline"
+                                          onsubmit="return confirm('Yakin ingin menghapus ticket ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-outline-danger">
+                                            <i class="bi bi-trash"></i> Hapus
+                                        </button>
+                                    </form>
+                                @endcan
                             </div>
+                        @else
+                            {{-- MINGGU 4 HARI 2: Action buttons untuk staff/admin --}}
+                            @canany(['update', 'delete'], $ticket)
+                                <div class="btn-group btn-group-sm">
+                                    @can('update', $ticket)
+                                        <a href="{{ route('tickets.edit', $ticket) }}"
+                                           class="btn btn-outline-primary">
+                                            <i class="bi bi-pencil"></i> Edit
+                                        </a>
+                                    @endcan
+                                    @can('delete', $ticket)
+                                        <form action="{{ route('tickets.destroy', $ticket) }}"
+                                              method="POST"
+                                              class="d-inline"
+                                              onsubmit="return confirm('Yakin ingin menghapus ticket ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-outline-danger">
+                                                <i class="bi bi-trash"></i> Hapus
+                                            </button>
+                                        </form>
+                                    @endcan
+                                </div>
+                            @endcanany
                         @endif
                     </div>
                 </div>
@@ -268,14 +296,80 @@
                         <a href="{{ route('tickets.index') }}" class="btn btn-outline-secondary">
                             <i class="bi bi-arrow-left"></i> Kembali ke Daftar
                         </a>
-                        @if($ticket->status !== 'closed')
-                            <a href="{{ route('tickets.edit', $ticket) }}" class="btn btn-outline-primary">
-                                <i class="bi bi-pencil"></i> Edit Ticket
-                            </a>
-                        @endif
+                        @can('update', $ticket)
+                            @if($ticket->status !== 'closed')
+                                <a href="{{ route('tickets.edit', $ticket) }}" class="btn btn-outline-primary">
+                                    <i class="bi bi-pencil"></i> Edit Ticket
+                                </a>
+                            @endif
+                        @endcan
                     </div>
                 </div>
             </div>
+
+            {{-- MINGGU 4 HARI 2: Status Update (Admin/Staff) --}}
+            @can('changeStatus', $ticket)
+                <div class="card mb-4 border-warning">
+                    <div class="card-header bg-warning text-dark">
+                        <h6 class="mb-0">
+                            <i class="bi bi-arrow-repeat"></i> Update Status
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <form action="{{ route('tickets.update-status', $ticket) }}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <div class="mb-3">
+                                <select name="status" class="form-select form-select-sm">
+                                    <option value="open" {{ $ticket->status == 'open' ? 'selected' : '' }}>Open</option>
+                                    <option value="in_progress" {{ $ticket->status == 'in_progress' ? 'selected' : '' }}>In Progress</option>
+                                    <option value="resolved" {{ $ticket->status == 'resolved' ? 'selected' : '' }}>Resolved</option>
+                                    <option value="closed" {{ $ticket->status == 'closed' ? 'selected' : '' }}>Closed</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-warning btn-sm w-100">
+                                <i class="bi bi-check-lg"></i> Update Status
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            @endcan
+
+            {{-- MINGGU 4 HARI 2: Assign to Staff (Admin only) --}}
+            @can('assign-tickets')
+                <div class="card mb-4 border-info">
+                    <div class="card-header bg-info text-white">
+                        <h6 class="mb-0">
+                            <i class="bi bi-person-plus"></i> Assign Ticket
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <form action="{{ route('tickets.assign', $ticket) }}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <div class="mb-3">
+                                <select name="assigned_to" class="form-select form-select-sm">
+                                    <option value="">-- Tidak di-assign --</option>
+                                    @foreach($staffList ?? [] as $staff)
+                                        <option value="{{ $staff->id }}" {{ $ticket->assigned_to == $staff->id ? 'selected' : '' }}>
+                                            {{ $staff->name }} ({{ ucfirst($staff->role) }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-info btn-sm w-100">
+                                <i class="bi bi-check-lg"></i> Assign
+                            </button>
+                        </form>
+                        @if($ticket->assignee)
+                            <small class="text-muted d-block mt-2">
+                                <i class="bi bi-person-badge"></i>
+                                Saat ini: {{ $ticket->assignee->name }}
+                            </small>
+                        @endif
+                    </div>
+                </div>
+            @endcan
 
             {{-- Ticket Info --}}
             <div class="card mb-4">
