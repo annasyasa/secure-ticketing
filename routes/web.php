@@ -545,22 +545,4 @@ Route::get('/error-handling-demo', function () {
 // ============================================================================
 // Secure Auth Routes (Laravel Breeze)
 // ============================================================================
-// require __DIR__.'/auth.php';
-
-// ============================================================================
-// Secure Auth Routes
-// ============================================================================
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
-
-Route::middleware('guest')->group(function () {
-    Route::get('/login', [LoginController::class, 'create'])->name('login');
-    Route::post('/login', [LoginController::class, 'store']);
-
-    Route::get('/register', [RegisterController::class, 'create'])->name('register');
-    Route::post('/register', [RegisterController::class, 'store']);
-});
-
-Route::middleware('auth')->group(function () {
-    Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
-});
+require __DIR__.'/auth.php';
