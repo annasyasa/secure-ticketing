@@ -21,7 +21,7 @@ return new class extends Migration
     {
         Schema::create('xss_lab_comments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('ticket_id')->constrained()->onDelete('cascade');
+            $table->foreignId('ticket_id');
             $table->string('author_name'); // Nama bebas (tanpa auth) untuk demo XSS
             $table->text('content');
             $table->timestamps();

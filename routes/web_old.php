@@ -15,13 +15,18 @@ use App\Http\Controllers\VulnerableAuth\VulnerableRegisterController;
 use App\Http\Controllers\XSSLabController;
 use Illuminate\Support\Facades\Route;
 
+
+
+
 Route::get('/', function () {
     return view('home');
 });
 
+
 Route::get('/hello', function () {
     return 'Hello World! Selamat datang di Bootcamp Secure Coding!';
 });
+
 
 Route::get('/api/status', function () {
     return response()->json([
@@ -31,29 +36,73 @@ Route::get('/api/status', function () {
     ]);
 });
 
+
+
+
+
+
+
 Route::middleware('auth')->group(function () {
+    
+    
+    
+    
+    
+    
+    
+    
     Route::resource('tickets', TicketController::class);
 
+    
     Route::patch('/tickets/{ticket}/status', [TicketController::class, 'updateStatus'])
         ->name('tickets.update-status');
 
+    
     Route::patch('/tickets/{ticket}/assign', [TicketController::class, 'assign'])
         ->name('tickets.assign');
 });
 
+
+
+
+
 use App\Http\Controllers\AdminController;
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
+    
     Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+
+    
     Route::get('/users', [AdminController::class, 'users'])->name('users');
+
+    
     Route::get('/tickets', [AdminController::class, 'allTickets'])->name('tickets');
+
+    
     Route::post('/tickets/{ticket}/assign', [AdminController::class, 'assignTicket'])
         ->name('tickets.assign');
 });
 
+
 Route::get('/reports', [AdminController::class, 'reports'])
     ->middleware(['auth', 'role:staff,admin'])
     ->name('admin.reports');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Route::prefix('demo-blade')->name('demo-blade.')->group(function () {
     Route::get('/', [DemoBladeController::class, 'index'])->name('index');
@@ -63,15 +112,23 @@ Route::prefix('demo-blade')->name('demo-blade.')->group(function () {
     Route::get('/stacks', [DemoBladeController::class, 'stacks'])->name('stacks');
 });
 
+
+
+
+
 Route::prefix('xss-lab')->name('xss-lab.')->group(function () {
     Route::get('/', [XSSLabController::class, 'index'])->name('index');
+
+    
     Route::post('/reset-comments', [XSSLabController::class, 'resetComments'])->name('reset-comments');
 
+    
     Route::get('/reflected/vulnerable', [XSSLabController::class, 'reflectedVulnerable'])
         ->name('reflected.vulnerable');
     Route::get('/reflected/secure', [XSSLabController::class, 'reflectedSecure'])
         ->name('reflected.secure');
 
+    
     Route::get('/stored/vulnerable', [XSSLabController::class, 'storedVulnerable'])
         ->name('stored.vulnerable');
     Route::post('/stored/vulnerable', [XSSLabController::class, 'storedVulnerableStore'])
@@ -82,11 +139,18 @@ Route::prefix('xss-lab')->name('xss-lab.')->group(function () {
     Route::post('/stored/secure', [XSSLabController::class, 'storedSecureStore'])
         ->name('stored.secure.store');
 
+    
     Route::get('/dom/vulnerable', [XSSLabController::class, 'domVulnerable'])
         ->name('dom.vulnerable');
     Route::get('/dom/secure', [XSSLabController::class, 'domSecure'])
         ->name('dom.secure');
 });
+
+
+
+
+
+
 
 Route::post('/tickets/{ticket}/comments', [CommentController::class, 'store'])
     ->name('comments.store');
@@ -98,18 +162,33 @@ Route::put('/comments/{comment}', [CommentController::class, 'update'])
     ->name('comments.update');
 
 Route::prefix('security-testing')->name('security-testing.')->group(function () {
+    
     Route::get('/', [SecurityTestController::class, 'index'])->name('index');
+
+    
     Route::get('/xss', [SecurityTestController::class, 'xssTest'])->name('xss');
+
+    
     Route::get('/csrf', [SecurityTestController::class, 'csrfTest'])->name('csrf');
     Route::post('/csrf', [SecurityTestController::class, 'csrfTestPost'])->name('csrf.post');
+
+    
     Route::get('/headers', [SecurityTestController::class, 'headersTest'])->name('headers');
+
+    
     Route::get('/audit', [SecurityTestController::class, 'auditChecklist'])->name('audit');
 });
 
+
+
+
 Route::prefix('validation-lab')->name('validation-lab.')->group(function () {
+    
     Route::get('/', [ValidationLabController::class, 'index'])
         ->name('index');
 
+    
+    
     Route::get('/vulnerable', [ValidationLabController::class, 'vulnerableForm'])
         ->name('vulnerable');
     Route::post('/vulnerable', [ValidationLabController::class, 'vulnerableSubmit'])
@@ -117,6 +196,8 @@ Route::prefix('validation-lab')->name('validation-lab.')->group(function () {
     Route::post('/vulnerable/clear', [ValidationLabController::class, 'vulnerableClear'])
         ->name('vulnerable.clear');
 
+    
+    
     Route::get('/secure', [ValidationLabController::class, 'secureForm'])
         ->name('secure');
     Route::post('/secure', [ValidationLabController::class, 'secureSubmit'])
@@ -125,53 +206,102 @@ Route::prefix('validation-lab')->name('validation-lab.')->group(function () {
         ->name('secure.clear');
 });
 
+
+
+
+
+
+
+
+
+
+
+
 Route::prefix('api')->group(function () {
+    
     Route::post('/vulnerable-submit', [ValidationLabController::class, 'apiVulnerable'])
         ->withoutMiddleware(['web']);
 });
 
+
+
+
 Route::prefix('csrf-lab')->name('csrf-lab.')->group(function () {
+    
     Route::get('/', [CsrfLabController::class, 'index'])
         ->name('index');
+
+    
     Route::get('/how-it-works', [CsrfLabController::class, 'howItWorks'])
         ->name('how-it-works');
+
+    
     Route::get('/attack-demo', [CsrfLabController::class, 'attackDemo'])
         ->name('attack-demo');
+
+    
     Route::get('/protection-demo', [CsrfLabController::class, 'protectionDemo'])
         ->name('protection-demo');
+
+    
     Route::get('/ajax-demo', [CsrfLabController::class, 'ajaxDemo'])
         ->name('ajax-demo');
 
+    
+
+    
     Route::post('/secure-transfer', [CsrfLabController::class, 'secureTransfer'])
         ->name('secure-transfer');
+
+    
     Route::post('/protected-action', [CsrfLabController::class, 'protectedAction'])
         ->name('protected-action');
+
+    
     Route::post('/ajax-action', [CsrfLabController::class, 'ajaxAction'])
         ->name('ajax-action');
+
+    
     Route::post('/reset', [CsrfLabController::class, 'resetDemo'])
         ->name('reset');
 });
+
+
+
+
+
+
 
 Route::post('/csrf-lab/vulnerable-transfer', [CsrfLabController::class, 'vulnerableTransfer'])
     ->name('csrf-lab.vulnerable-transfer')
     ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
 
+
 Route::post('/csrf-lab/protected-transfer', [CsrfLabController::class, 'protectedTransfer'])
     ->name('csrf-lab.protected-transfer');
 
+
+
+
 Route::prefix('sqli-lab')->name('sqli-lab.')->group(function () {
+
+    
     Route::get('/', [SqliLabController::class, 'index'])->name('index');
+
+    
     Route::get('/how-it-works', [SqliLabController::class, 'howItWorks'])->name('how-it-works');
     Route::get('/cheatsheet', [SqliLabController::class, 'cheatsheet'])->name('cheatsheet');
 
     Route::get('/vulnerable-search', [SqliLabController::class, 'vulnerableSearch'])
         ->name('vulnerable-search');
 
+    
     Route::get('/vulnerable-login', [SqliLabController::class, 'vulnerableLogin'])
         ->name('vulnerable-login');
     Route::post('/vulnerable-login', [SqliLabController::class, 'vulnerableLoginSubmit'])
         ->name('vulnerable-login-submit');
 
+    
     Route::get('/blind-sqli', [SqliLabController::class, 'blindSqli'])
         ->name('blind-sqli');
     Route::post('/blind-sqli/boolean', [SqliLabController::class, 'blindSqliBooleanCheck'])
@@ -179,14 +309,28 @@ Route::prefix('sqli-lab')->name('sqli-lab.')->group(function () {
     Route::post('/blind-sqli/time', [SqliLabController::class, 'blindSqliTimeCheck'])
         ->name('blind-sqli-time');
 
+    
+    
+    
+
+    
     Route::get('/secure-search', [SqliLabController::class, 'secureSearch'])
         ->name('secure-search');
 
+    
+    
+    
+
+    
     Route::get('/seed-data', [SqliLabController::class, 'seedData'])
         ->name('seed');
+
+    
     Route::get('/reset-data', [SqliLabController::class, 'resetData'])
         ->name('reset');
 });
+
+
 
 Route::prefix('auth-lab')->name('auth-lab.')->group(function () {
     Route::get('/', function () {
@@ -197,6 +341,9 @@ Route::prefix('auth-lab')->name('auth-lab.')->group(function () {
         return view('auth-lab.comparison');
     })->name('comparison');
 });
+
+
+
 
 Route::prefix('authorization-lab')->name('authorization-lab.')->group(function () {
     Route::get('/', function () {
@@ -212,52 +359,75 @@ Route::prefix('authorization-lab')->name('authorization-lab.')->group(function (
     })->name('implementation');
 });
 
+
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('auth.dashboard');
     })->name('dashboard');
 });
 
+
+
+
 Route::prefix('vulnerable')->name('vulnerable.')->group(function () {
+
+    
     Route::get('/login', [VulnerableLoginController::class, 'create'])
         ->name('login');
     Route::post('/login', [VulnerableLoginController::class, 'store'])
         ->name('login.submit');
 
+    
     Route::get('/register', [VulnerableRegisterController::class, 'create'])
         ->name('register');
     Route::post('/register', [VulnerableRegisterController::class, 'store'])
         ->name('register.submit');
 
+    
     Route::get('/dashboard', function () {
         if (! session()->has('vulnerable_user')) {
             return redirect()->route('vulnerable.login');
         }
 
+        
         return view('vulnerable-auth.dashboard', [
             'user' => session('vulnerable_user'),
         ]);
     })->name('dashboard');
 
+    
     Route::post('/logout', [VulnerableLoginController::class, 'destroy'])
         ->name('logout');
 
+    
     Route::get('/show-users', [VulnerableRegisterController::class, 'showUsers'])
         ->name('show-users');
 
+    
     Route::get('/brute-force-stats', [VulnerableLoginController::class, 'bruteForceStats'])
         ->name('brute-force-stats');
 });
 
+
+
+
+
+
 Route::prefix('bac-lab')->name('bac-lab.')->group(function () {
+
+    
     Route::get('/', function () {
         return view('bac-lab.index');
     })->name('home');
 
+    
     Route::get('/comparison', function () {
         return view('bac-lab.comparison');
     })->name('comparison');
 
+    
     Route::get('/vulnerable/login', function () {
         return view('bac-lab.vulnerable.login');
     })->name('vulnerable.login');
@@ -267,8 +437,17 @@ Route::prefix('bac-lab')->name('bac-lab.')->group(function () {
     })->name('secure.login');
 });
 
+
 Route::middleware('auth')->prefix('bac-lab')->name('bac-lab.')->group(function () {
+
+    
+    
+    
+    
+    
+
     Route::prefix('vulnerable')->name('vulnerable.')->group(function () {
+
         Route::get('/tickets', [VulnerableController::class, 'index'])
             ->name('tickets.index');
 
@@ -285,7 +464,16 @@ Route::middleware('auth')->prefix('bac-lab')->name('bac-lab.')->group(function (
             ->name('tickets.destroy');
     });
 
+    
+    
+    
+    
+    
+
     Route::prefix('secure')->name('secure.')->group(function () {
+
+        
+        
         Route::resource('tickets', SecureController::class)
             ->parameters(['tickets' => 'ticket']);
     });
