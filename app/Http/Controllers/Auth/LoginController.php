@@ -11,8 +11,7 @@ use Illuminate\View\View;
 
 /**
  * Login Controller - SECURE IMPLEMENTATION
- * 
- * Controller ini mengimplementasikan best practices:
+ * * Controller ini mengimplementasikan best practices:
  * 1. Rate limiting via LoginRequest
  * 2. Session regeneration setelah login
  * 3. Proper session invalidation saat logout
@@ -25,15 +24,17 @@ class LoginController extends Controller
      */
     public function create(): View
     {
-        return view('auth.login', [
+        /** @var view-string $view */
+        $view = 'auth.login';
+
+        return view($view, [
             'isSecure' => true,
         ]);
     }
 
     /**
      * Handle an incoming authentication request.
-     * 
-     * SECURITY FEATURES:
+     * * SECURITY FEATURES:
      * 1. LoginRequest handles validation + rate limiting
      * 2. Session regeneration mencegah session fixation
      */
@@ -51,8 +52,7 @@ class LoginController extends Controller
 
     /**
      * Destroy an authenticated session.
-     * 
-     * SECURITY FEATURES:
+     * * SECURITY FEATURES:
      * 1. Session invalidation
      * 2. Token regeneration
      * 3. Complete logout flow
@@ -75,13 +75,22 @@ class LoginController extends Controller
      */
     public function status(Request $request): View
     {
+        // FIX PHPSTAN: Gunakan ->email (bukan ?->) karena jika Auth::user() ada, email pasti ada.
+        // Jika tidak ada user login, ambil dari input request.
+        $user = Auth::user();
+        $email = $user ? $user->email : (string) $request->input('email', '');
+
         $loginAttempts = \App\Models\LoginAttempt::secure()
-            ->where('email', Auth::user()?->email ?? $request->input('email', ''))
+            ->where('email', $email)
             ->latest()
             ->take(10)
             ->get();
 
-        return view('auth.status', [
+        // FIX PHPSTAN: Berikan type-hint view-string agar PHPStan tahu ini view yang valid
+        /** @var view-string $view */
+        $view = 'auth.status';
+
+        return view($view, [
             'attempts' => $loginAttempts,
             'isSecure' => true,
         ]);
